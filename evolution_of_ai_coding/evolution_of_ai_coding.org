@@ -96,6 +96,51 @@
 - You review the outcome, not every keystroke
 - *Demo: session log from yesterday*
 
+** The Real Win: Process Without the Pain
+
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}[scale=0.75, transform shape,
+    node distance=0.6cm,
+    phase/.style={draw, rounded corners, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\small},
+    skip/.style={phase, fill=red!10, text=red!60!black},
+    bot/.style={phase, fill=green!10, text=green!40!black},
+    arr/.style={-{Stealth[length=2.5mm]}, thick}
+  ]
+  % SDLC phases
+  \node[phase, fill=gray!10] (req) {Requirements};
+  \node[phase, fill=gray!10, right=of req] (design) {Design};
+  \node[phase, fill=gray!10, right=of design] (code) {Code};
+  \node[phase, fill=gray!10, right=of code] (test) {Test};
+  \node[phase, fill=gray!10, right=of test] (deploy) {Deploy};
+
+  \draw[arr] (req) -- (design);
+  \draw[arr] (design) -- (code);
+  \draw[arr] (code) -- (test);
+  \draw[arr] (test) -- (deploy);
+
+  % "Skipped" overlay
+  \node[skip, below=0.8cm of req] (s1) {Skipped};
+  \node[skip, below=0.8cm of design] (s2) {Rushed};
+  \node[skip, below=0.8cm of test] (s4) {Skipped};
+
+  % Bot overlay
+  \node[bot, below=0.8cm of s1] (b1) {Bot};
+  \node[bot, below=0.8cm of s2] (b2) {Bot};
+  \node[bot, below=0.8cm of s4] (b4) {Bot};
+
+  % Labels
+  \node[left=0.3cm of req, font=\footnotesize\bfseries] {SDLC};
+  \node[left=0.3cm of s1, font=\footnotesize\bfseries, text=red!60!black] {Reality};
+  \node[left=0.3cm of b1, font=\footnotesize\bfseries, text=green!40!black] {Now};
+\end{tikzpicture}
+\end{center}
+#+end_export
+
+- SDLC was the gold standard --- developers skipped the boring parts
+- Quality, timelines, and budgets suffered
+- Now bots handle process; people focus on what they enjoy
+
 ** Clone Your Digital Avatars
 
 #+begin_export latex
