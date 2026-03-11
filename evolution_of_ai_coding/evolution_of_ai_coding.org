@@ -12,7 +12,7 @@
 #+latex_header: \usepackage{fontspec}
 #+latex_header: \setmonofont{Menlo}[Scale=0.75]
 
-* The Three Phases of AI-Assisted Coding
+* The Four Phases of AI-Assisted Coding
 
 ** Phase 1: Copy-Paste Era
 
@@ -66,35 +66,146 @@
 - You review and approve changes
 - *Collaboration, not dictation*
 
-** Phase 3: Agents --- The Final Frontier
+** Phase 2 in Action: Research to Requirements
 
 #+begin_export latex
 \begin{center}
 \begin{tikzpicture}[scale=0.75, transform shape,
-    node distance=1cm and 1.8cm,
-    agent/.style={draw, rounded corners, minimum width=2.2cm, minimum height=0.8cm, align=center, fill=green!10, font=\small},
-    action/.style={draw, rounded corners, minimum width=1.8cm, minimum height=0.6cm, align=center, fill=orange!10, font=\scriptsize},
+    node distance=0.8cm and 1.2cm,
+    phasebox/.style={draw, rounded corners, minimum width=2.4cm, minimum height=0.7cm, align=center, fill=blue!8, font=\scriptsize},
+    output/.style={draw, rounded corners, minimum width=2.4cm, minimum height=0.7cm, align=center, fill=yellow!15, font=\scriptsize, dashed},
     arr/.style={-{Stealth[length=2.5mm]}, thick}
   ]
-  \node[agent] (you) {\textbf{You} (specify intent)};
-  \node[agent, below=of you] (agent) {\textbf{AI Agent}};
-  \node[action, below left=0.7cm and 0.3cm of agent] (code) {Write Code};
-  \node[action, below=0.7cm of agent] (test) {Run Tests};
-  \node[action, below right=0.7cm and 0.3cm of agent] (deploy) {Create PR};
+  % Top row: research pipeline
+  \node[phasebox] (intent) {Your Intent\\``prop tech startup''};
+  \node[phasebox, right=of intent] (research) {Competitive\\Research};
+  \node[phasebox, right=of research] (reqs) {Requirements\\Generation};
+  \node[phasebox, right=of reqs] (trace) {Traceability\\Matrix};
 
-  \draw[arr] (you) -- node[right, font=\scriptsize] {task} (agent);
-  \draw[arr] (agent) -- (code);
-  \draw[arr] (agent) -- (test);
-  \draw[arr] (agent) -- (deploy);
+  \draw[arr] (intent) -- (research);
+  \draw[arr] (research) -- (reqs);
+  \draw[arr] (reqs) -- (trace);
 
-  \draw[arr, dashed, bend left=40] (test.south) to node[below, font=\scriptsize] {fix \& retry} (code.south);
+  % Bottom row: outputs
+  \node[output, below=of research] (comp) {Competitor\\Analysis};
+  \node[output, below=of reqs] (aml) {AML/KYC\\Regulatory};
+  \node[output, below=of trace] (persona) {User\\Personas};
+
+  \draw[arr, gray] (research) -- (comp);
+  \draw[arr, gray] (reqs) -- (aml);
+  \draw[arr, gray] (trace) -- (persona);
 \end{tikzpicture}
 \end{center}
 #+end_export
 
-- Deploy agents with a goal --- they plan, code, test autonomously
-- You review the outcome, not every keystroke
-- *Demo: session log from yesterday*
+- One chat session: competitive analysis \to requirements \to personas
+- Auto-generated regulatory details (AML/KYC for Dubai market)
+- Live traceability matrix, TDD-first with 100% coverage
+
+** Phase 2: Project Bootstrap on GitHub
+
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}[scale=0.8, transform shape,
+    node distance=0.8cm,
+    box/.style={draw, rounded corners, minimum width=2.8cm, minimum height=0.7cm, align=center, fill=blue!8, font=\small},
+    arr/.style={-{Stealth[length=2.5mm]}, thick}
+  ]
+  \node[box] (gh) {Create GitHub\\Project};
+  \node[box, right=1.2cm of gh] (deps) {Analyse\\Dependencies};
+  \node[box, right=1.2cm of deps] (seq) {Optimal Task\\Sequence};
+
+  \draw[arr] (gh) -- (deps);
+  \draw[arr] (deps) -- (seq);
+
+  \node[below=0.6cm of deps, font=\scriptsize, text=gray, align=center] {AI suggests: pick tasks that unblock\\the most downstream requirements first};
+\end{tikzpicture}
+\end{center}
+#+end_export
+
+- AI creates the project, issues, and milestones on GitHub
+- Suggests logical task ordering based on dependency analysis
+- Personas feed into UX design tasks automatically
+
+** Phase 3: Multi-Agent Systems
+
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}[scale=0.75, transform shape,
+    node distance=0.8cm and 1.4cm,
+    human/.style={draw, rounded corners, minimum width=2.4cm, minimum height=0.8cm, align=center, fill=violet!12, font=\small},
+    agent/.style={draw, rounded corners, minimum width=2.5cm, minimum height=0.7cm, align=center, fill=green!10, font=\scriptsize},
+    arr/.style={-{Stealth[length=2.5mm]}, thick}
+  ]
+  % Human intent at top
+  \node[human] (you) {\textbf{You} (one paragraph of intent)};
+
+  % Spawned agents — evenly spaced row
+  \node[agent, below=1cm of you, xshift=-5cm] (a1) {Trend Researcher};
+  \node[agent, below=1cm of you, xshift=-1.7cm] (a2) {Feedback Synthesizer};
+  \node[agent, below=1cm of you, xshift=1.7cm] (a3) {UX Researcher};
+  \node[agent, below=1cm of you, xshift=5cm] (a4) {Backend Architect};
+
+  \draw[arr] (you) -- (a1);
+  \draw[arr] (you) -- (a2);
+  \draw[arr] (you) -- (a3);
+  \draw[arr] (you) -- (a4);
+
+  % Output
+  \node[draw, rounded corners, minimum width=6cm, minimum height=0.7cm, align=center, fill=orange!10, font=\scriptsize, below=0.8cm of $(a2)!0.5!(a3)$] (out) {26 epics $\cdot$ 163 tasks $\cdot$ 9-week sprint plan};
+
+  \draw[arr] (a1) -- (out);
+  \draw[arr] (a2) -- (out);
+  \draw[arr] (a3) -- (out);
+  \draw[arr] (a4) -- (out);
+\end{tikzpicture}
+\end{center}
+#+end_export
+
+- Agents defined in plain English (identity, skills, expertise)
+- 30--40 minutes for what took a human 3--4 days
+- *Demo: REST API testing tool --- research \to design \to 163 tasks*
+
+** Phase 4: Agent-to-Agent Protocols
+
+#+begin_export latex
+\begin{center}
+\begin{tikzpicture}[scale=0.8, transform shape,
+    node distance=1cm and 2cm,
+    agent/.style={draw, rounded corners, minimum width=2cm, minimum height=0.8cm, align=center, fill=green!10, font=\small},
+    tool/.style={draw, rounded corners, minimum width=1.8cm, minimum height=0.6cm, align=center, fill=yellow!15, font=\scriptsize},
+    proto/.style={draw, thick, dashed, blue!60, rounded corners, inner sep=0.4cm},
+    arr/.style={-{Stealth[length=2.5mm]}, thick}
+  ]
+  % Agents — wide gap so tools don't overlap
+  \node[agent] (a1) {Agent A};
+  \node[agent, right=6cm of a1] (a2) {Agent B};
+
+  % A2A protocol between agents
+  \draw[arr, blue!60, thick, <->] (a1) -- node[above, font=\scriptsize, blue!60] {A2A Protocol} (a2);
+
+  % Tools below each agent — enough spread
+  \node[tool, below left=0.7cm and 0.8cm of a1] (t1) {Tool 1};
+  \node[tool, below right=0.7cm and 0.8cm of a1] (t2) {Tool 2};
+  \node[tool, below left=0.7cm and 0.8cm of a2] (t3) {Tool 3};
+  \node[tool, below right=0.7cm and 0.8cm of a2] (t4) {Tool 4};
+
+  \draw[arr, gray] (a1) -- (t1);
+  \draw[arr, gray] (a1) -- (t2);
+  \draw[arr, gray] (a2) -- (t3);
+  \draw[arr, gray] (a2) -- (t4);
+
+  % Labels
+  \node[below=0.2cm of t1, font=\scriptsize, gray] {MCP (agent $\leftrightarrow$ tool)};
+  \node[above=0.4cm of $(a1)!0.5!(a2)$, font=\scriptsize, blue!60] {Agent $\leftrightarrow$ Agent};
+\end{tikzpicture}
+\end{center}
+#+end_export
+
+- MCP: how agents discover and use tools
+- A2A: how agents communicate with each other
+- Agents buying services from other agents
+- *Next: make your services discoverable by agents, not just humans*
 
 ** The Real Win: Process Without the Pain
 
@@ -137,9 +248,9 @@
 \end{center}
 #+end_export
 
-- SDLC was the gold standard --- developers skipped the boring parts
-- Quality, timelines, and budgets suffered
-- Now bots handle process; people focus on what they enjoy
+- Developers skip docs, tests, requirements --- despite their value
+- Design processes where bots prevent errors
+- Bots handle process; people focus on what they enjoy
 
 ** Clone Your Digital Avatars
 
