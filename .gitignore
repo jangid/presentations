@@ -1,0 +1,24 @@
+# emacs related
+*~
+\#*\#
+.dir-locals.el
+
+# LaTeX build artifacts (tex is generated from org)
+*.tex
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+ltximg/
+
+# direnv
+.direnv/
+
+# OS files
+.DS_Store
